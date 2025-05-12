@@ -1,0 +1,32 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+  functions = "netlify/functions"
+
+[dev]
+  command = "npm run dev"
+  targetPort = 3000
+
+[functions]
+  node_bundler = "esbuild"
+  external_node_modules = ["sharp"]
+
+[[edge_functions]]
+  function = "image-transform"
+  path = "/api/image/*"
+
+[[edge_functions]]
+  function = "auth"
+  path = "/api/auth/*"
+
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
+[build.environment]
+  NEXT_USE_NETLIFY_EDGE = "true"
+  NEXT_PUBLIC_API_URL = "/.netlify/functions"
+
+[[redirects]]
+  from = "/api/*"
+  to = "/.netlify/functions/:splat"
+  status = 200
