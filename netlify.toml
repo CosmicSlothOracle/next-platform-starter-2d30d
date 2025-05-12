@@ -19,6 +19,10 @@
   function = "auth"
   path = "/api/auth/*"
 
+[[edge_functions]]
+  function = "rewrite"
+  path = "/*"
+
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
